@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
-import FolderTree from "./FolderTree";
-import { getParentPath } from "../../utils/getParentPath";
-import { useFiles } from "../../contexts/FilesContext";
-import "./NavigationPane.scss";
+import React, { useEffect, useState } from 'react';
+
+import { useFiles } from '../../contexts/FilesContext';
+import { getParentPath } from '../../utils/getParentPath';
+import FolderTree from './FolderTree';
+
+import './NavigationPane.scss';
 
 const NavigationPane = () => {
   const [foldersTree, setFoldersTree] = useState([]);
@@ -25,7 +27,7 @@ const NavigationPane = () => {
       // Grouping folders by parent path
       const foldersStruct = Object.groupBy(folders, ({ path }) => getParentPath(path));
       setFoldersTree(() => {
-        const rootPath = "";
+        const rootPath = '';
         return createChildRecursive(rootPath, foldersStruct);
       });
     }

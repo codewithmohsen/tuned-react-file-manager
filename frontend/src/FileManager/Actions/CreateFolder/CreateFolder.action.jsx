@@ -1,20 +1,23 @@
-import { useEffect, useState } from "react";
-import { useDetectOutsideClick } from "../../../hooks/useDetectOutsideClick";
-import { duplicateNameHandler } from "../../../utils/duplicateNameHandler";
-import NameInput from "../../../components/NameInput/NameInput";
-import ErrorTooltip from "../../../components/ErrorTooltip/ErrorTooltip";
-import { useFileNavigation } from "../../../contexts/FileNavigationContext";
-import { useLayout } from "../../../contexts/LayoutContext";
-import { validateApiCallback } from "../../../utils/validateApiCallback";
+import { useEffect, useState } from 'react';
+
+import ErrorTooltip from '../../../components/ErrorTooltip/ErrorTooltip';
+import NameInput from '../../../components/NameInput/NameInput';
+import { useFileNavigation } from '../../../contexts/FileNavigationContext';
+import { useLayout } from '../../../contexts/LayoutContext';
+import { useDetectOutsideClick } from '../../../hooks/useDetectOutsideClick';
+import { duplicateNameHandler } from '../../../utils/duplicateNameHandler';
+import { validateApiCallback } from '../../../utils/validateApiCallback';
 
 const maxNameLength = 220;
 
 const CreateFolderAction = ({ filesViewRef, file, onCreateFolder, triggerAction }) => {
+  // console.log(filesViewRef, file, onCreateFolder, triggerAction);
+
   const [folderName, setFolderName] = useState(file.name);
   const [folderNameError, setFolderNameError] = useState(false);
-  const [folderErrorMessage, setFolderErrorMessage] = useState("");
-  const [errorXPlacement, setErrorXPlacement] = useState("right");
-  const [errorYPlacement, setErrorYPlacement] = useState("bottom");
+  const [folderErrorMessage, setFolderErrorMessage] = useState('');
+  const [errorXPlacement, setErrorXPlacement] = useState('right');
+  const [errorYPlacement, setErrorYPlacement] = useState('bottom');
   const outsideClick = useDetectOutsideClick((e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -32,7 +35,7 @@ const CreateFolderAction = ({ filesViewRef, file, onCreateFolder, triggerAction 
   // Validate folder name and call "onCreateFolder" function
   const handleValidateFolderName = (e) => {
     e.stopPropagation();
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       e.preventDefault();
       handleFolderCreating();
       return;
@@ -47,13 +50,11 @@ const CreateFolderAction = ({ filesViewRef, file, onCreateFolder, triggerAction 
     const invalidCharsRegex = /[\\/:*?"<>|]/;
     if (invalidCharsRegex.test(e.key)) {
       e.preventDefault();
-      setFolderErrorMessage(
-        "A file name can't contain any of the following characters: \\ / : * ? \" < > |"
-      );
+      setFolderErrorMessage('A file name can\'t contain any of the following characters: \\ / : * ? " < > |');
       setFolderNameError(true);
     } else {
       setFolderNameError(false);
-      setFolderErrorMessage("");
+      setFolderErrorMessage('');
     }
   };
 
@@ -62,7 +63,7 @@ const CreateFolderAction = ({ filesViewRef, file, onCreateFolder, triggerAction 
     if (folderNameError) {
       const autoHideError = setTimeout(() => {
         setFolderNameError(false);
-        setFolderErrorMessage("");
+        setFolderErrorMessage('');
       }, 7000);
 
       return () => clearTimeout(autoHideError);
@@ -87,11 +88,11 @@ const CreateFolderAction = ({ filesViewRef, file, onCreateFolder, triggerAction 
       return;
     }
 
-    if (newFolderName === "") {
-      newFolderName = duplicateNameHandler("New Folder", true, syncedCurrPathFiles);
+    if (newFolderName === '') {
+      newFolderName = duplicateNameHandler('New Folder', true, syncedCurrPathFiles);
     }
 
-    validateApiCallback(onCreateFolder, "onCreateFolder", newFolderName, currentFolder);
+    validateApiCallback(onCreateFolder, 'onCreateFolder', newFolderName, currentFolder);
     setCurrentPathFiles((prev) => prev.filter((f) => f.key !== file.key));
     triggerAction.close();
   }
@@ -112,15 +113,11 @@ const CreateFolderAction = ({ filesViewRef, file, onCreateFolder, triggerAction 
       const nameInputContainerRect = nameInputContainer.getBoundingClientRect();
 
       const rightAvailableSpace = filesContainerRect.right - nameInputContainerRect.left;
-      rightAvailableSpace > errorMessageWidth
-        ? setErrorXPlacement("right")
-        : setErrorXPlacement("left");
+      rightAvailableSpace > errorMessageWidth ? setErrorXPlacement('right') : setErrorXPlacement('left');
 
       const bottomAvailableSpace =
         filesContainerRect.bottom - (nameInputContainerRect.top + nameInputContainer.clientHeight);
-      bottomAvailableSpace > errorMessageHeight
-        ? setErrorYPlacement("bottom")
-        : setErrorYPlacement("top");
+      bottomAvailableSpace > errorMessageHeight ? setErrorYPlacement('bottom') : setErrorYPlacement('top');
     }
   }, []);
   //
@@ -140,14 +137,10 @@ const CreateFolderAction = ({ filesViewRef, file, onCreateFolder, triggerAction 
         onChange={handleFolderNameChange}
         onKeyDown={handleValidateFolderName}
         onClick={(e) => e.stopPropagation()}
-        {...(activeLayout === "list" && { rows: 1 })}
+        {...(activeLayout === 'list' && { rows: 1 })}
       />
       {folderNameError && (
-        <ErrorTooltip
-          message={folderErrorMessage}
-          xPlacement={errorXPlacement}
-          yPlacement={errorYPlacement}
-        />
+        <ErrorTooltip message={folderErrorMessage} xPlacement={errorXPlacement} yPlacement={errorYPlacement} />
       )}
     </>
   );

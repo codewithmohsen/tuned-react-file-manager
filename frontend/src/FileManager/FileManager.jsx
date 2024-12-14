@@ -1,19 +1,24 @@
-import Loader from "../components/Loader/Loader";
-import Toolbar from "./Toolbar/Toolbar";
-import NavigationPane from "./NavigationPane/NavigationPane";
-import BreadCrumb from "./BreadCrumb/BreadCrumb";
-import FileList from "./FileList/FileList";
-import Actions from "./Actions/Actions";
-import { FilesProvider } from "../contexts/FilesContext";
-import { FileNavigationProvider } from "../contexts/FileNavigationContext";
-import { SelectionProvider } from "../contexts/SelectionContext";
-import { ClipBoardProvider } from "../contexts/ClipboardContext";
-import { LayoutProvider } from "../contexts/LayoutContext";
-import { useTriggerAction } from "../hooks/useTriggerAction";
-import { useColumnResize } from "../hooks/useColumnResize";
-import PropTypes from "prop-types";
-import { dateStringValidator, urlValidator } from "../validators/propValidators";
-import "./FileManager.scss";
+import { useEffect } from 'react';
+import PropTypes from 'prop-types';
+
+import Loader from '../components/Loader/Loader';
+import { ClipBoardProvider } from '../contexts/ClipboardContext';
+import { FileNavigationProvider } from '../contexts/FileNavigationContext';
+import { FilesProvider } from '../contexts/FilesContext';
+import { LayoutProvider } from '../contexts/LayoutContext';
+import { SelectionProvider } from '../contexts/SelectionContext';
+import { useColumnResize } from '../hooks/useColumnResize';
+import { useTriggerAction } from '../hooks/useTriggerAction';
+import { dateStringValidator, urlValidator } from '../validators/propValidators';
+import Actions from './Actions/Actions';
+import BreadCrumb from './BreadCrumb/BreadCrumb';
+import FileList from './FileList/FileList';
+import NavigationPane from './NavigationPane/NavigationPane';
+import Toolbar from './Toolbar/Toolbar';
+
+import './FileManager.scss';
+
+import { Breadcrumb } from '@/app/dashboard/_components/breadcrump-c';
 
 const FileManager = ({
   files,
@@ -30,24 +35,22 @@ const FileManager = ({
   onRefresh,
   onFileOpen = () => {},
   onError = () => {},
-  layout = "grid",
+  layout = 'grid',
   enableFilePreview = true,
   maxFileSize,
   filePreviewPath,
   acceptedFileTypes,
-  height = "600px",
-  width = "100%",
+  height = '600px',
+  width = '100%',
 }) => {
   const triggerAction = useTriggerAction();
-  const { containerRef, colSizes, isDragging, handleMouseMove, handleMouseUp, handleMouseDown } =
-    useColumnResize(20, 80);
+  const { containerRef, colSizes, isDragging, handleMouseMove, handleMouseUp, handleMouseDown } = useColumnResize(
+    20,
+    80
+  );
 
   return (
-    <main
-      className="file-explorer"
-      onContextMenu={(e) => e.preventDefault()}
-      style={{ height, width }}
-    >
+    <main className="file-explorer" onContextMenu={(e) => e.preventDefault()} style={{ height, width }}>
       <Loader isLoading={isLoading} />
       <FilesProvider filesData={files} onError={onError}>
         <FileNavigationProvider>
@@ -67,15 +70,15 @@ const FileManager = ({
                   onMouseUp={handleMouseUp}
                   className="files-container"
                 >
-                  <div className="navigation-pane" style={{ width: colSizes.col1 + "%" }}>
+                  <div className="navigation-pane" style={{ width: colSizes.col1 + '%' }}>
                     <NavigationPane />
                     <div
-                      className={`sidebar-resize ${isDragging ? "sidebar-dragging" : ""}`}
+                      className={`sidebar-resize ${isDragging ? 'sidebar-dragging' : ''}`}
                       onMouseDown={handleMouseDown}
                     />
                   </div>
 
-                  <div className="folders-preview" style={{ width: colSizes.col2 + "%" }}>
+                  <div className="folders-preview" style={{ width: colSizes.col2 + '%' }}>
                     <BreadCrumb />
                     <FileList
                       onCreateFolder={onCreateFolder}
@@ -108,7 +111,7 @@ const FileManager = ({
   );
 };
 
-FileManager.displayName = "FileManager";
+FileManager.displayName = 'FileManager';
 
 FileManager.propTypes = {
   files: PropTypes.arrayOf(
@@ -136,7 +139,7 @@ FileManager.propTypes = {
   onRefresh: PropTypes.func,
   onFileOpen: PropTypes.func,
   onError: PropTypes.func,
-  layout: PropTypes.oneOf(["grid", "list"]),
+  layout: PropTypes.oneOf(['grid', 'list']),
   maxFileSize: PropTypes.number,
   enableFilePreview: PropTypes.bool,
   filePreviewPath: urlValidator,

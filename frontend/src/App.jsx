@@ -1,16 +1,18 @@
-import { useEffect, useRef, useState } from "react";
-import FileManager from "./FileManager/FileManager";
-import { createFolderAPI } from "./api/createFolderAPI";
-import { renameAPI } from "./api/renameAPI";
-import { deleteAPI } from "./api/deleteAPI";
-import { copyItemAPI, moveItemAPI } from "./api/fileTransferAPI";
-import { getAllFilesAPI } from "./api/getAllFilesAPI";
-import { downloadFile } from "./api/downloadFileAPI";
-import "./App.scss";
+import { useEffect, useRef, useState } from 'react';
+
+import { createFolderAPI } from './api/createFolderAPI';
+import { deleteAPI } from './api/deleteAPI';
+import { downloadFile } from './api/downloadFileAPI';
+import { copyItemAPI, moveItemAPI } from './api/fileTransferAPI';
+import { getAllFilesAPI } from './api/getAllFilesAPI';
+import { renameAPI } from './api/renameAPI';
+import FileManager from './FileManager/FileManager';
+
+import './App.scss';
 
 function App() {
   const fileUploadConfig = {
-    url: import.meta.env.VITE_API_BASE_URL + "/upload",
+    url: import.meta.env.VITE_API_BASE_URL + '/upload',
   };
   const [isLoading, setIsLoading] = useState(false);
   const [files, setFiles] = useState([]);
@@ -86,7 +88,7 @@ function App() {
   const handlePaste = async (copiedItems, destinationFolder, operationType) => {
     setIsLoading(true);
     const copiedItemIds = copiedItems.map((item) => item._id);
-    if (operationType === "copy") {
+    if (operationType === 'copy') {
       const response = await copyItemAPI(copiedItemIds, destinationFolder?._id);
     } else {
       const response = await moveItemAPI(copiedItemIds, destinationFolder?._id);

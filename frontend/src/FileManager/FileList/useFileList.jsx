@@ -1,16 +1,17 @@
-import { BiRename, BiSelectMultiple } from "react-icons/bi";
-import { BsCopy, BsFolderPlus, BsGrid, BsScissors } from "react-icons/bs";
-import { FaListUl, FaRegFile, FaRegPaste } from "react-icons/fa6";
-import { FiRefreshCw } from "react-icons/fi";
-import { MdOutlineDelete, MdOutlineFileDownload, MdOutlineFileUpload } from "react-icons/md";
-import { PiFolderOpen } from "react-icons/pi";
-import { useClipBoard } from "../../contexts/ClipboardContext";
-import { useEffect, useState } from "react";
-import { useSelection } from "../../contexts/SelectionContext";
-import { useLayout } from "../../contexts/LayoutContext";
-import { useFileNavigation } from "../../contexts/FileNavigationContext";
-import { duplicateNameHandler } from "../../utils/duplicateNameHandler";
-import { validateApiCallback } from "../../utils/validateApiCallback";
+import { useEffect, useState } from 'react';
+import { BiRename, BiSelectMultiple } from 'react-icons/bi';
+import { BsCopy, BsFolderPlus, BsGrid, BsScissors } from 'react-icons/bs';
+import { FaListUl, FaRegFile, FaRegPaste } from 'react-icons/fa6';
+import { FiRefreshCw } from 'react-icons/fi';
+import { MdOutlineDelete, MdOutlineFileDownload, MdOutlineFileUpload } from 'react-icons/md';
+import { PiFolderOpen } from 'react-icons/pi';
+
+import { useClipBoard } from '../../contexts/ClipboardContext';
+import { useFileNavigation } from '../../contexts/FileNavigationContext';
+import { useLayout } from '../../contexts/LayoutContext';
+import { useSelection } from '../../contexts/SelectionContext';
+import { duplicateNameHandler } from '../../utils/duplicateNameHandler';
+import { validateApiCallback } from '../../utils/validateApiCallback';
 
 const useFileList = (onRefresh, enableFilePreview, triggerAction) => {
   const [selectedFileIndexes, setSelectedFileIndexes] = useState([]);
@@ -21,8 +22,7 @@ const useFileList = (onRefresh, enableFilePreview, triggerAction) => {
 
   const { clipBoard, setClipBoard, handleCutCopy, handlePasting } = useClipBoard();
   const { selectedFiles, setSelectedFiles, handleDownload } = useSelection();
-  const { currentPath, setCurrentPath, currentPathFiles, setCurrentPathFiles } =
-    useFileNavigation();
+  const { currentPath, setCurrentPath, currentPathFiles, setCurrentPathFiles } = useFileNavigation();
   const { activeLayout, setActiveLayout } = useLayout();
 
   // Context Menu
@@ -32,7 +32,7 @@ const useFileList = (onRefresh, enableFilePreview, triggerAction) => {
       setSelectedFileIndexes([]);
       setSelectedFiles([]);
     } else {
-      enableFilePreview && triggerAction.show("previewFile");
+      enableFilePreview && triggerAction.show('previewFile');
     }
     setVisible(false);
   };
@@ -49,7 +49,7 @@ const useFileList = (onRefresh, enableFilePreview, triggerAction) => {
 
   const handleRenaming = () => {
     setVisible(false);
-    triggerAction.show("rename");
+    triggerAction.show('rename');
   };
 
   const handleDownloadItems = () => {
@@ -59,23 +59,23 @@ const useFileList = (onRefresh, enableFilePreview, triggerAction) => {
 
   const handleDelete = () => {
     setVisible(false);
-    triggerAction.show("delete");
+    triggerAction.show('delete');
   };
 
   const handleRefresh = () => {
     setVisible(false);
-    validateApiCallback(onRefresh, "onRefresh");
+    validateApiCallback(onRefresh, 'onRefresh');
     setClipBoard(null);
   };
 
   const handleCreateNewFolder = () => {
-    triggerAction.show("createFolder");
+    triggerAction.show('createFolder');
     setVisible(false);
   };
 
   const handleUpload = () => {
     setVisible(false);
-    triggerAction.show("uploadFile");
+    triggerAction.show('uploadFile');
   };
 
   const handleselectAllFiles = () => {
@@ -85,94 +85,94 @@ const useFileList = (onRefresh, enableFilePreview, triggerAction) => {
 
   const emptySelecCtxItems = [
     {
-      title: "View",
-      icon: activeLayout === "grid" ? <BsGrid size={18} /> : <FaListUl size={18} />,
+      title: 'View',
+      icon: activeLayout === 'grid' ? <BsGrid size={18} /> : <FaListUl size={18} />,
       onClick: () => {},
       children: [
         {
-          title: "Grid",
+          title: 'Grid',
           icon: <BsGrid size={18} />,
-          selected: activeLayout === "grid",
+          selected: activeLayout === 'grid',
           onClick: () => {
-            setActiveLayout("grid");
+            setActiveLayout('grid');
             setVisible(false);
           },
         },
         {
-          title: "List",
+          title: 'List',
           icon: <FaListUl size={18} />,
-          selected: activeLayout === "list",
+          selected: activeLayout === 'list',
           onClick: () => {
-            setActiveLayout("list");
+            setActiveLayout('list');
             setVisible(false);
           },
         },
       ],
     },
     {
-      title: "Refresh",
+      title: 'Refresh',
       icon: <FiRefreshCw size={18} />,
       onClick: handleRefresh,
       divider: true,
     },
     {
-      title: "New folder",
+      title: 'New folder',
       icon: <BsFolderPlus size={18} />,
       onClick: handleCreateNewFolder,
     },
     {
-      title: "Upload",
+      title: 'Upload',
       icon: <MdOutlineFileUpload size={18} />,
       onClick: handleUpload,
       divider: true,
     },
     {
-      title: "Select all",
+      title: 'Select all',
       icon: <BiSelectMultiple size={18} />,
       onClick: handleselectAllFiles,
     },
   ];
 
   const selecCtxItems = [
+    // {
+    //   title: 'Open',
+    //   icon: lastSelectedFile?.isDirectory ? <PiFolderOpen size={20} /> : <FaRegFile size={16} />,
+    //   onClick: handleFileOpen,
+    //   divider: true,
+    // },
+    // {
+    //   title: "Cut",
+    //   icon: <BsScissors size={19} />,
+    //   onClick: () => handleMoveOrCopyItems(true),
+    // },
+    // {
+    //   title: "Copy",
+    //   icon: <BsCopy strokeWidth={0.1} size={17} />,
+    //   onClick: () => handleMoveOrCopyItems(false),
+    //   divider: !lastSelectedFile?.isDirectory,
+    // },
+    // {
+    //   title: 'Paste',
+    //   icon: <FaRegPaste size={18} />,
+    //   onClick: handleFilePasting,
+    //   className: `${clipBoard ? '' : 'disable-paste'}`,
+    //   hidden: !lastSelectedFile?.isDirectory,
+    //   divider: true,
+    // },
+    // {
+    //   title: 'Rename',
+    //   icon: <BiRename size={19} />,
+    //   onClick: handleRenaming,
+    //   hidden: selectedFiles.length > 1,
+    // },
     {
-      title: "Open",
-      icon: lastSelectedFile?.isDirectory ? <PiFolderOpen size={20} /> : <FaRegFile size={16} />,
-      onClick: handleFileOpen,
-      divider: true,
-    },
-    {
-      title: "Cut",
-      icon: <BsScissors size={19} />,
-      onClick: () => handleMoveOrCopyItems(true),
-    },
-    {
-      title: "Copy",
-      icon: <BsCopy strokeWidth={0.1} size={17} />,
-      onClick: () => handleMoveOrCopyItems(false),
-      divider: !lastSelectedFile?.isDirectory,
-    },
-    {
-      title: "Paste",
-      icon: <FaRegPaste size={18} />,
-      onClick: handleFilePasting,
-      className: `${clipBoard ? "" : "disable-paste"}`,
-      hidden: !lastSelectedFile?.isDirectory,
-      divider: true,
-    },
-    {
-      title: "Rename",
-      icon: <BiRename size={19} />,
-      onClick: handleRenaming,
-      hidden: selectedFiles.length > 1,
-    },
-    {
-      title: "Download",
+      title: 'Download',
       icon: <MdOutlineFileDownload size={18} />,
       onClick: handleDownloadItems,
       hidden: lastSelectedFile?.isDirectory,
     },
     {
-      title: "Delete",
+      title: 'Delete',
       icon: <MdOutlineDelete size={19} />,
       onClick: handleDelete,
     },
@@ -184,7 +184,7 @@ const useFileList = (onRefresh, enableFilePreview, triggerAction) => {
       return [
         ...prev,
         {
-          name: duplicateNameHandler("New Folder", true, prev),
+          name: duplicateNameHandler('New Folder', true, prev),
           isDirectory: true,
           path: currentPath,
           isEditing: true,
@@ -222,10 +222,10 @@ const useFileList = (onRefresh, enableFilePreview, triggerAction) => {
   useEffect(() => {
     if (triggerAction.isActive) {
       switch (triggerAction.actionType) {
-        case "createFolder":
+        case 'createFolder':
           handleFolderCreating();
           break;
-        case "rename":
+        case 'rename':
           handleItemRenaming();
           break;
       }

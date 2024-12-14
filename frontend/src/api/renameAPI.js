@@ -1,7 +1,8 @@
-import { api } from "./api";
+import { api } from './api';
 
 export const renameAPI = async (id, newName) => {
-  const response = api.patch("/rename", {
+  console.log(api, id, newName);
+  const response = api.patch('/rename', {
     id,
     newName,
   });

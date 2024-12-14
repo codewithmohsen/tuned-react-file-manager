@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState } from "react";
-import { MdHome, MdMoreHoriz, MdOutlineNavigateNext } from "react-icons/md";
-import { useFileNavigation } from "../../contexts/FileNavigationContext";
-import { useDetectOutsideClick } from "../../hooks/useDetectOutsideClick";
-import "./BreadCrumb.scss";
+import { useEffect, useRef, useState } from 'react';
+import { MdHome, MdMoreHoriz, MdOutlineNavigateNext } from 'react-icons/md';
+
+import { useFileNavigation } from '../../contexts/FileNavigationContext';
+import { useDetectOutsideClick } from '../../hooks/useDetectOutsideClick';
+
+import './BreadCrumb.scss';
 
 const BreadCrumb = () => {
   const [folders, setFolders] = useState([]);
@@ -20,11 +22,11 @@ const BreadCrumb = () => {
 
   useEffect(() => {
     setFolders(() => {
-      let path = "";
-      return currentPath?.split("/").map((item) => {
+      let path = '';
+      return currentPath?.split('/').map((item) => {
         return {
-          name: item || "Home",
-          path: item === "" ? item : (path += `/${item}`),
+          name: item || 'Home',
+          path: item === '' ? item : (path += `/${item}`),
         };
       });
     });
@@ -78,7 +80,7 @@ const BreadCrumb = () => {
     <div className="bread-crumb-container">
       <div className="breadcrumb" ref={breadCrumbRef}>
         {folders.map((folder, index) => (
-          <div key={index} style={{ display: "contents" }}>
+          <div key={index} style={{ display: 'contents' }}>
             <span
               className="folder-name"
               onClick={() => switchPath(folder.path)}

@@ -1,7 +1,8 @@
-import { BsGridFill } from "react-icons/bs";
-import { FaCheck, FaListUl } from "react-icons/fa6";
-import { useDetectOutsideClick } from "../../hooks/useDetectOutsideClick";
-import { useLayout } from "../../contexts/LayoutContext";
+import { BsGridFill } from 'react-icons/bs';
+import { FaCheck, FaListUl } from 'react-icons/fa6';
+
+import { useLayout } from '../../contexts/LayoutContext';
+import { useDetectOutsideClick } from '../../hooks/useDetectOutsideClick';
 
 const LayoutToggler = ({ setShowToggleViewMenu, onLayoutChange }) => {
   const toggleViewRef = useDetectOutsideClick(() => {
@@ -11,13 +12,13 @@ const LayoutToggler = ({ setShowToggleViewMenu, onLayoutChange }) => {
 
   const layoutOptions = [
     {
-      key: "grid",
-      name: "Grid",
+      key: 'grid',
+      name: 'Grid',
       icon: <BsGridFill size={18} />,
     },
     {
-      key: "list",
-      name: "List",
+      key: 'list',
+      name: 'List',
       icon: <FaListUl size={18} />,
     },
   ];
